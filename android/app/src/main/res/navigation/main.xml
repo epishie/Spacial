@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/discoverFragment">
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="com.epishie.spacial.ui.features.discover.DiscoverFragment" />
+    <fragment
+        android:id="@+id/catalogsFragment"
+        android:name="com.epishie.spacial.ui.features.catalogs.CatalogsFragment" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.epishie.spacial.ui.features.favorites.FavoritesFragment" />
+</navigation>

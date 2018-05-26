@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+android {
+    compileSdkVersion 'android-P'
+    defaultConfig {
+        applicationId "com.epishie.spacial"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    def supportVer = '28.0.0-alpha1'
+    def lifecycleVer = '1.1.1'
+    def navigationVer = '1.0.0-alpha01'
+    def pagingVer = '1.0.0'
+    def constraintVer = '1.1.0'
+    def dataBindingVer = '3.2.0-alpha15'
+    def picassoVer = '2.71828'
+    def daggerVer = '2.16'
+    def rxVer = '2.1.14-RC1'
+    def retroVer = '2.4.0'
+    def mockkVer = '1.8'
+    def assertJVer = '2.9.1'
+
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support:appcompat-v7:$supportVer"
+    implementation "com.android.support:design:$supportVer"
+    implementation "com.android.support:recyclerview-v7:$supportVer"
+    implementation "android.arch.lifecycle:extensions:$lifecycleVer"
+    implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVer"
+    implementation "android.arch.navigation:navigation-ui-ktx:$navigationVer"
+    implementation "android.arch.paging:runtime:$pagingVer"
+    implementation "com.android.support.constraint:constraint-layout:$constraintVer"
+    implementation ("com.squareup.picasso:picasso:$picassoVer") {
+        exclude group: 'com.android.support'
+    }
+    implementation "com.google.dagger:dagger:$daggerVer"
+    implementation "io.reactivex.rxjava2:rxjava:$rxVer"
+    implementation "com.squareup.retrofit2:retrofit:$retroVer"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retroVer"
+    implementation "com.squareup.retrofit2:converter-gson:$retroVer"
+    kapt "androidx.databinding:databinding-compiler:$dataBindingVer"
+    kapt "com.google.dagger:dagger-compiler:$daggerVer"
+    testImplementation 'junit:junit:4.12'
+    testImplementation "io.mockk:mockk:$mockkVer"
+    testImplementation "android.arch.core:core-testing:$lifecycleVer"
+    testImplementation "org.assertj:assertj-core:$assertJVer"
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+

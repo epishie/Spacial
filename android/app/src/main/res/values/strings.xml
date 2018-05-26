@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Spacial</string>
+
+    <string name="lbl_catalogs">Catalogs</string>
+    <string name="lbl_discover">Discover</string>
+    <string name="lbl_favorites">Favorites</string>
+
+    <string name="lbl_save_to_catalog">Save to catalog</string>
+</resources>
