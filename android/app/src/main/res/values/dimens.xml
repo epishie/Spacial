@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="unit_0">4dp</dimen>
+    <dimen name="unit_1">8dp</dimen>
+    <dimen name="unit_2">16dp</dimen>
+    <dimen name="unit_3">24dp</dimen>
+
     <dimen name="bottom_nav_height">56dp</dimen>
+    <dimen name="image_size">56dp</dimen>
 </resources>

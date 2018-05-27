@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+    <!-- UNIT 1 -->
+    <android.support.constraint.Guideline
+        android:id="@+id/startMargin1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="@dimen/unit_1"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:id="@+id/endMargin1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="@dimen/unit_1"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:id="@+id/topMargin1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="@dimen/unit_1"
+        android:orientation="horizontal" />
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomMargin1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="@dimen/unit_1"
+        android:orientation="horizontal" />
+
+    <!-- UNIT 2 -->
+    <android.support.constraint.Guideline
+        android:id="@+id/startMargin2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="@dimen/unit_2"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:id="@+id/endMargin2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="@dimen/unit_2"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:id="@+id/topMargin2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="@dimen/unit_2"
+        android:orientation="horizontal" />
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomMargin2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="@dimen/unit_2"
+        android:orientation="horizontal" />
+
+    <!-- UNIT 3 -->
+    <android.support.constraint.Guideline
+        android:id="@+id/startMargin3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="@dimen/unit_3"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:id="@+id/endMargin3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="@dimen/unit_3"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:id="@+id/topMargin3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="@dimen/unit_3"
+        android:orientation="horizontal" />
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomMargin3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="@dimen/unit_3"
+        android:orientation="horizontal" />
+</merge>

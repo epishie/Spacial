@@ -2,29 +2,91 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:elevation="0dp">
         <android.support.v7.widget.SearchView
             android:id="@+id/search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:iconifiedByDefault="false" />
         <Button
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lbl_save_to_catalog"
             android:layout_gravity="end"
+            android:visibility="gone"
             style="@style/Widget.AppCompat.Button.Borderless.Colored" />
     </android.support.design.widget.AppBarLayout>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/results"
+        android:id="@+id/thumbnails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/bottom_nav_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/emptyState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/thumbnails"
+        app:layout_anchorGravity="center"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:text="@string/msg_no_images" />
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/errorState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/thumbnails"
+        app:layout_anchorGravity="center"
+        android:visibility="gone">
+        <include layout="@layout/margins" />
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/image_size"
+            android:layout_height="@dimen/image_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/errorMessage"
+            android:src="@drawable/ic_telescope"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/startMargin3"
+            app:layout_constraintEnd_toEndOf="@id/endMargin3"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintBottom_toTopOf="@id/retry"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:layout_marginTop="@dimen/unit_3"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        <Button
+            android:id="@+id/retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorMessage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/lbl_retry"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+    </android.support.constraint.ConstraintLayout>
     <include layout="@layout/bottom_nav" />
 </android.support.design.widget.CoordinatorLayout>
