@@ -7,6 +7,7 @@
 
     <string name="lbl_save_to_catalog">Save to catalog</string>
     <string name="lbl_retry">Retry</string>
+    <string name="lbl_search">Search</string>
 
     <string name="msg_no_images">Sorry, no images matched your search.</string>
     <string name="msg_network_error">Sorry, we can\'t seem to connect to our telescopes. Please check your internet connection and try again.</string>

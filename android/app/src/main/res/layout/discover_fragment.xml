@@ -28,7 +28,6 @@
         android:id="@+id/thumbnails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_nav_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     <android.support.constraint.ConstraintLayout
         android:id="@+id/emptyState"
@@ -88,5 +87,4 @@
             android:text="@string/lbl_retry"
             style="@style/Widget.AppCompat.Button.Borderless.Colored" />
     </android.support.constraint.ConstraintLayout>
-    <include layout="@layout/bottom_nav" />
 </android.support.design.widget.CoordinatorLayout>

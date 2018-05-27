@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/discoverFragment">
+    app:startDestination="@id/mainFragment">
+    <fragment android:id="@+id/mainFragment"
+        android:name="com.epishie.spacial.ui.features.main.MainFragment">
+        <action android:id="@+id/goToDiscover"
+            app:destination="@id/discoverFragment" />
+    </fragment>
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.epishie.spacial.ui.features.discover.DiscoverFragment">

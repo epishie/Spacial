@@ -4,27 +4,27 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.SearchView
 import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import com.epishie.spacial.R
 import com.epishie.spacial.component
 import com.epishie.spacial.ui.extensions.reObserve
 import com.epishie.spacial.ui.features.adapter.Thumbnail
 import com.epishie.spacial.ui.features.adapter.ThumbnailAdapter
-import com.epishie.spacial.ui.features.common.BottomNavigationFragment
 import com.epishie.spacial.ui.features.common.ViewModelFactory
 import com.epishie.spacial.ui.widget.SpaceGridItemDecoration
 import kotlinx.android.synthetic.main.discover_fragment.*
 import kotlinx.android.synthetic.main.discover_fragment.view.*
 import javax.inject.Inject
 
-class DiscoverFragment : BottomNavigationFragment() {
-    override val bottomNavItemId: Int = R.id.discoverFragment
+class DiscoverFragment : Fragment() {
     @Inject
     lateinit var vmFactory: ViewModelFactory<DiscoverViewModel>
     private lateinit var vm: DiscoverViewModel
@@ -59,6 +59,10 @@ class DiscoverFragment : BottomNavigationFragment() {
         vm.empty.reObserve(this, emptyObserver)
         vm.error.reObserve(this, errorObserver)
 
+        if (search.requestFocusFromTouch()) {
+            requireActivity().window
+                    .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        }
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 vm.search(query ?: "")

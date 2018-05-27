@@ -1,15 +1,13 @@
 package com.epishie.spacial.ui.features.catalogs
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.epishie.spacial.R
-import com.epishie.spacial.ui.features.common.BottomNavigationFragment
 
-class CatalogsFragment : BottomNavigationFragment() {
-    override val bottomNavItemId: Int = R.id.catalogsFragment
-
+class CatalogsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

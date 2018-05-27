@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/margins" />
+            <ImageView
+                android:id="@+id/discoverSection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/search_header"
+                android:adjustViewBounds="true"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/discoverLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/startMargin3"
+                app:layout_constraintEnd_toEndOf="@id/endMargin3"
+                app:layout_constraintTop_toTopOf="@id/discoverSection"
+                app:layout_constraintBottom_toTopOf="@id/search"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:text="@string/lbl_discover"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+            <TextView
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/discoverSection"
+                app:layout_constraintEnd_toEndOf="@id/discoverSection"
+                app:layout_constraintTop_toBottomOf="@id/discoverLabel"
+                app:layout_constraintBottom_toBottomOf="@id/discoverSection"
+                app:layout_constraintWidth_percent="0.7"
+                android:layout_marginTop="@dimen/unit_1"
+                android:background="@drawable/bg_search"
+                android:textColor="?android:textColorSecondaryInverse"
+                android:text="@string/lbl_search"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:selectableItemBackground" />
+            <TextView
+                android:id="@+id/catalogsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/startMargin2"
+                app:layout_constraintTop_toBottomOf="@id/discoverSection"
+                android:layout_marginTop="@dimen/unit_1"
+                android:text="@string/lbl_catalogs"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/catalogs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/catalogsLabel"
+                android:layout_marginTop="@dimen/unit_1" />
+            <TextView
+                android:id="@+id/favoritesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/startMargin2"
+                app:layout_constraintTop_toBottomOf="@id/catalogs"
+                android:layout_marginTop="@dimen/unit_1"
+                android:text="@string/lbl_favorites"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/favorites"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/favoritesLabel"
+                android:layout_marginTop="@dimen/unit_1" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

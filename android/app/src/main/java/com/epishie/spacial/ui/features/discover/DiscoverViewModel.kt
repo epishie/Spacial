@@ -63,8 +63,4 @@ class DiscoverViewModel @Inject constructor(imageRepository: ImageRepository,
     fun retry() {
         result.value?.retry?.invoke()
     }
-
-    override fun onCleared() {
-        super.onCleared()
-    }
 }

@@ -6,7 +6,5 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/catalogs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_nav_height" />
-    <include layout="@layout/bottom_nav" />
+        android:layout_height="match_parent" />
 </android.support.design.widget.CoordinatorLayout>
