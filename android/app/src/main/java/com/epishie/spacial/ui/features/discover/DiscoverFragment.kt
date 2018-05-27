@@ -10,6 +10,7 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.epishie.spacial.R
 import com.epishie.spacial.component
 import com.epishie.spacial.ui.extensions.reObserve
@@ -70,6 +71,9 @@ class DiscoverFragment : BottomNavigationFragment() {
         })
         retry.setOnClickListener {
             vm.retry()
+        }
+        thumbnailAdapter.onItemClickListener = {
+            findNavController().navigate(DiscoverFragmentDirections.viewDiscoveredPhoto(it))
         }
     }
 

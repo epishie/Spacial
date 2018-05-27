@@ -1,11 +1,13 @@
 package com.epishie.spacial.model
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations.map
 import android.arch.lifecycle.Transformations.switchMap
 import android.arch.paging.DataSource
 import android.arch.paging.PageKeyedDataSource
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
+import java.io.IOException
 import javax.inject.Inject
 
 class ImageRepository @Inject constructor(private val imagesApi: ImagesApi) {
@@ -13,15 +15,35 @@ class ImageRepository @Inject constructor(private val imagesApi: ImagesApi) {
         val factory = ImageDataSourceFactory(imagesApi, query)
         return SearchResult(factory,
                 switchMap(factory.dataSource, {
-                    it.status
+                    map(it.status, {
+                        when (it) {
+                            is Status.Error -> Status.Error(mapError(it.throwable))
+                            else -> it
+                        }
+                    })
                 }),
                 {
                     factory.dataSource.value?.retry()
                 })
     }
 
+    fun getImage(id: String): Single<ImageEntity> {
+        return imagesApi.getImage(id)
+                .onErrorResumeNext {
+                    Single.error(mapError(it))
+                }
+    }
+
+    private fun mapError(throwable: Throwable): Throwable {
+        return when (throwable) {
+            is IOException -> NetworkError()
+            else -> throwable
+        }
+    }
+
     interface ImagesApi {
         fun search(query: String): Single<Page>
+        fun getImage(id: String): Single<ImageEntity>
 
         data class Page(val images: List<ImageEntity>, val next: String?)
     }
@@ -50,7 +72,7 @@ class ImageRepository @Inject constructor(private val imagesApi: ImagesApi) {
                             retryRequest = {
                                 loadInitial(params, callback)
                             }
-                            status.postValue(Status.Error(NetworkError()))
+                            status.postValue(Status.Error(error))
                         }
                     }
         }

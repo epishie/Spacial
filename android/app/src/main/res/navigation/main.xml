@@ -4,11 +4,19 @@
     app:startDestination="@id/discoverFragment">
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.epishie.spacial.ui.features.discover.DiscoverFragment" />
+        android:name="com.epishie.spacial.ui.features.discover.DiscoverFragment">
+        <action android:id="@+id/viewDiscoveredPhoto"
+            app:destination="@id/imageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/catalogsFragment"
         android:name="com.epishie.spacial.ui.features.catalogs.CatalogsFragment" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.epishie.spacial.ui.features.favorites.FavoritesFragment" />
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.epishie.spacial.ui.features.image.ImageFragment">
+        <argument android:name="id" app:type="string" />
+    </fragment>
 </navigation>

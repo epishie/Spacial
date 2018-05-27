@@ -8,10 +8,18 @@ import android.view.ViewGroup
 import com.epishie.spacial.databinding.ThumbnailItemBinding
 
 class ThumbnailAdapter : PagedListAdapter<Thumbnail, ThumbnailAdapter.ViewHolder>(DiffCallback) {
+    var onItemClickListener: ((String) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ThumbnailItemBinding.inflate(LayoutInflater.from(parent.context),
                 parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding).apply {
+            binding.root.setOnClickListener {
+                getItem(adapterPosition)?.let {
+                    onItemClickListener?.invoke(it.id)
+
+                }
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

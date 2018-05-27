@@ -5,4 +5,5 @@
     <color name="colorSurface">#0E101E</color>
     <color name="colorOnSurface">#FFFFFFFF</color>
     <color name="colorOnSurfaceMedium">#99FFFFFF</color>
+    <color name="scrim">#66000000</color>
 </resources>

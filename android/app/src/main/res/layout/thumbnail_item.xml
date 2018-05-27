@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintDimensionRatio="4:3"
-            app:imageUrl="@{thumbnail.url}" />
+            app:imageUrlCropped="@{thumbnail.url}" />
     </android.support.constraint.ConstraintLayout>
     <!--
     <ImageView
