@@ -11,8 +11,11 @@
     <string name="lbl_delete">Delete</string>
     <string name="lbl_see_all">See all</string>
 
-    <string name="msg_no_images">Sorry, no images matched your search.</string>
+    <string name="msg_no_images">Sorry, no images matched your search</string>
+    <string name="msg_no_images_catalog">Sorry, there are no images in this catalog</string>
+    <string name="msg_no_catalogs">No saved catalogs</string>
     <string name="msg_network_error">Sorry, we can\'t seem to connect to our telescopes. Please check your internet connection and try again.</string>
     <string name="msg_unknown">Sorry, solar flares are jamming our signals. Please try again later.</string>
 </resources>
+
 

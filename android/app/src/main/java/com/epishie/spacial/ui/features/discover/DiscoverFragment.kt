@@ -58,6 +58,7 @@ class DiscoverFragment : Fragment() {
         vm.savable.reObserve(this, savableObserver)
         vm.empty.reObserve(this, emptyObserver)
         vm.error.reObserve(this, errorObserver)
+        vm.loading.reObserve(this, loadingObserver)
 
         if (search.requestFocusFromTouch()) {
             requireActivity().window
@@ -89,7 +90,7 @@ class DiscoverFragment : Fragment() {
     }
 
     private val savableObserver = Observer<Boolean> {
-        TransitionManager.beginDelayedTransition(appBar)
+        TransitionManager.beginDelayedTransition(mainLayout)
         save.visibility = when (it) {
             true -> View.VISIBLE
             else -> View.GONE
@@ -97,7 +98,7 @@ class DiscoverFragment : Fragment() {
     }
 
     private val emptyObserver = Observer<Boolean> {
-        TransitionManager.beginDelayedTransition(appBar)
+        TransitionManager.beginDelayedTransition(mainLayout)
         emptyState.visibility = when (it) {
             true -> View.VISIBLE
             else -> View.GONE
@@ -111,6 +112,14 @@ class DiscoverFragment : Fragment() {
             errorMessage.text = it
         } else {
             errorState.visibility = View.GONE
+        }
+    }
+
+    private val loadingObserver = Observer<Boolean> {
+        TransitionManager.beginDelayedTransition(mainLayout)
+        progressBar.visibility = when (it) {
+            true -> View.VISIBLE
+            else -> View.GONE
         }
     }
 }

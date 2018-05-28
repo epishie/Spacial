@@ -51,6 +51,9 @@ class DiscoverViewModel @Inject constructor(imageRepository: ImageRepository,
     val loaded: LiveData<Boolean> = map(searchStatus, { status ->
         status is Status.Loaded
     })
+    val loading: LiveData<Boolean> = map(searchStatus, { status ->
+        status === Status.Loading
+    })
     private val saved: LiveData<Boolean> = switchMap(searchQuery, {
         catalogRepository.getCatalog(it)
                 .map { !it.isEmpty() }

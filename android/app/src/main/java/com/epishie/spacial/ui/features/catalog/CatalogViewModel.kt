@@ -49,11 +49,18 @@ class CatalogViewModel @Inject constructor(imageRepository: ImageRepository,
     val loaded: LiveData<Boolean> = map(searchStatus, { status ->
         status is Status.Loaded
     })
+    val loading: LiveData<Boolean> = map(searchStatus, { status ->
+        status === Status.Loading
+    })
 
     fun search(query: String) {
         if (searchQuery.value != query) {
             searchQuery.value = query
         }
+    }
+
+    fun retry() {
+        searchResult.value?.retry?.invoke()
     }
 
     fun delete() {

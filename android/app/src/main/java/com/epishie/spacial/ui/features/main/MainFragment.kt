@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,7 @@ class MainFragment : Fragment() {
         requireContext().component.inject(this)
         vm = ViewModelProviders.of(this, vmFactory)[MainViewModel::class.java]
         vm.catalogs.reObserve(this, catalogsObserver)
+        vm.empty.reObserve(this, emptyObserver)
 
         search.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.goToDiscover())
@@ -64,5 +66,12 @@ class MainFragment : Fragment() {
 
     private val catalogsObserver = Observer<PagedList<Preview>> {
         catalogAdapter.submitList(it)
+    }
+    private val emptyObserver = Observer<Boolean> {
+        TransitionManager.beginDelayedTransition(mainLayout)
+        emptyState.visibility = when (it) {
+            true -> View.VISIBLE
+            else -> View.GONE
+        }
     }
 }

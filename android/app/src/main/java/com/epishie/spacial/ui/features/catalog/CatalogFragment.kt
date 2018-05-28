@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.transition.TransitionManager
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import com.epishie.spacial.R
@@ -70,12 +71,16 @@ class CatalogFragment : Fragment() {
         toolbar.title = name
 
         vm.thumbnails.reObserve(this, thumbnailsObserver)
+        vm.empty.reObserve(this, emptyObserver)
+        vm.error.reObserve(this, errorObserver)
+        vm.loading.reObserve(this, loadingObserver)
         thumbnailAdapter.onItemClickListener = {
             findNavController().navigate(CatalogFragmentDirections.viewCatalogPhoto(it))
         }
 
-        if (savedInstanceState == null) {
-            vm.search(name)
+        vm.search(name)
+        retry.setOnClickListener {
+            vm.retry()
         }
     }
 
@@ -98,5 +103,31 @@ class CatalogFragment : Fragment() {
 
     private val thumbnailsObserver = Observer<PagedList<Thumbnail>> {
         thumbnailAdapter.submitList(it)
+    }
+
+    private val emptyObserver = Observer<Boolean> {
+        TransitionManager.beginDelayedTransition(mainLayout)
+        emptyState.visibility = when (it) {
+            true -> View.VISIBLE
+            else -> View.GONE
+        }
+    }
+
+    private val errorObserver = Observer<CharSequence?> {
+        TransitionManager.beginDelayedTransition(mainLayout)
+        if (it != null) {
+            errorState.visibility = View.VISIBLE
+            errorMessage.text = it
+        } else {
+            errorState.visibility = View.GONE
+        }
+    }
+
+    private val loadingObserver = Observer<Boolean> {
+        TransitionManager.beginDelayedTransition(mainLayout)
+        progressBar.visibility = when (it) {
+            true -> View.VISIBLE
+            else -> View.GONE
+        }
     }
 }

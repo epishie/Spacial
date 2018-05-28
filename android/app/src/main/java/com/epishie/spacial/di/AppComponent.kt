@@ -1,6 +1,7 @@
 package com.epishie.spacial.di
 
 import com.epishie.spacial.App
+import com.epishie.spacial.model.db.AppDatabase
 import com.epishie.spacial.ui.features.catalog.CatalogFragment
 import com.epishie.spacial.ui.features.catalog.CatalogListFragment
 import com.epishie.spacial.ui.features.discover.DiscoverFragment
@@ -19,6 +20,8 @@ interface AppComponent {
         @BindsInstance
         fun appModule(app: App): Builder
     }
+
+    fun getAppDatabase(): AppDatabase
 
     fun inject(fragment: MainFragment)
     fun inject(fragment: DiscoverFragment)

@@ -26,7 +26,10 @@
     </fragment>
     <fragment
         android:id="@+id/catalogListFragment"
-        android:name="com.epishie.spacial.ui.features.catalog.CatalogListFragment" />
+        android:name="com.epishie.spacial.ui.features.catalog.CatalogListFragment">
+        <action android:id="@+id/viewCatalog"
+            app:destination="@id/catalogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.epishie.spacial.ui.features.favorites.FavoritesFragment" />

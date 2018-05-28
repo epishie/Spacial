@@ -88,4 +88,12 @@
             android:text="@string/lbl_retry"
             style="@style/Widget.AppCompat.Button.Borderless.Colored" />
     </android.support.constraint.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/thumbnails"
+        app:layout_anchorGravity="center"
+        android:indeterminate="true"
+        android:visibility="gone" />
 </android.support.design.widget.CoordinatorLayout>
