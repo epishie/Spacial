@@ -105,7 +105,7 @@ class DiscoverFragment : Fragment() {
     }
 
     private val errorObserver = Observer<CharSequence?> {
-        TransitionManager.beginDelayedTransition(appBar)
+        TransitionManager.beginDelayedTransition(mainLayout)
         if (it != null) {
             errorState.visibility = View.VISIBLE
             errorMessage.text = it

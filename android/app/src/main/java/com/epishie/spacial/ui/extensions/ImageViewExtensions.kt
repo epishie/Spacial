@@ -20,6 +20,8 @@ fun ImageView.loadImageFromUrl(url: String?) {
     if (url != null) {
         Picasso.get()
                 .load(url)
+                .fit()
+                .centerInside()
                 .into(this)
     }
 }

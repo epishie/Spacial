@@ -12,6 +12,8 @@ interface CatalogDao {
     fun selectAll(): DataSource.Factory<Int, CatalogData>
     @Query("SELECT * FROM catalogs WHERE name = :name")
     fun selectCatalog(name: String): Flowable<List<CatalogData>>
+    @Query("DELETE FROM catalogs WHERE name = :name")
+    fun deleteCatalog(name: String)
 }
 
 @Entity(tableName = "catalogs", indices = [Index("name", unique = true)])

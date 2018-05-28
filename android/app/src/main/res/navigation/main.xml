@@ -6,6 +6,10 @@
         android:name="com.epishie.spacial.ui.features.main.MainFragment">
         <action android:id="@+id/goToDiscover"
             app:destination="@id/discoverFragment" />
+        <action android:id="@+id/viewCatalog"
+            app:destination="@id/catalogFragment" />
+        <action android:id="@+id/viewCatalogList"
+            app:destination="@id/catalogListFragment" />
     </fragment>
     <fragment
         android:id="@+id/discoverFragment"
@@ -14,8 +18,15 @@
             app:destination="@id/imageFragment" />
     </fragment>
     <fragment
-        android:id="@+id/catalogsFragment"
-        android:name="com.epishie.spacial.ui.features.catalogs.CatalogsFragment" />
+        android:id="@+id/catalogFragment"
+        android:name="com.epishie.spacial.ui.features.catalog.CatalogFragment">
+        <argument android:name="name" app:type="string" />
+        <action android:id="@+id/viewCatalogPhoto"
+            app:destination="@id/imageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/catalogListFragment"
+        android:name="com.epishie.spacial.ui.features.catalog.CatalogListFragment" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.epishie.spacial.ui.features.favorites.FavoritesFragment" />

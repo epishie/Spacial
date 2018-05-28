@@ -6,4 +6,5 @@
     <dimen name="unit_3">24dp</dimen>
 
     <dimen name="image_size">56dp</dimen>
+    <dimen name="preview_height">128dp</dimen>
 </resources>

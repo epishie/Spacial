@@ -37,6 +37,14 @@ class CatalogRepository(private val catalogDao: CatalogDao,
         return catalogDao.selectAll().map(this::mapCatalog)
     }
 
+    fun deleteCatalog(name: String): Completable {
+        return Completable.fromAction {
+            catalogDao.deleteCatalog(name)
+        }.onErrorResumeNext {
+            Completable.error(mapError(it))
+        }.subscribeOn(scheduler)
+    }
+
     private fun mapCatalog(catalogEntity: CatalogEntity): CatalogData {
         return catalogEntity.run {
             CatalogData(0, name, coverUrl)

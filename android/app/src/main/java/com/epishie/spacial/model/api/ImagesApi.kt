@@ -43,7 +43,7 @@ class NasaApi : ImageRepository.ImagesApi {
                     }
                     val image = assetResponse.run {
                         collection.items.find {
-                            it.href?.contains("large") ?: false
+                            it.href?.contains("orig") ?: false
                         }?.href
                     }
                     imageEntity.copy(imageUrl = image)

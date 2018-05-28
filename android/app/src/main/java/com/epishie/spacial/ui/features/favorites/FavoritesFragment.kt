@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.epishie.spacial.R
 
+// TODO
 class FavoritesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
