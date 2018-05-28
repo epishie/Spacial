@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.epishie.spacial.R
-import com.epishie.spacial.ui.MainFragmentDirections
+import com.epishie.spacial.component
 import com.epishie.spacial.ui.features.common.ViewModelFactory
 import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
@@ -26,6 +26,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        requireContext().component.inject(this)
         vm = ViewModelProviders.of(this, vmFactory)[MainViewModel::class.java]
 
         search.setOnClickListener {

@@ -76,6 +76,9 @@ class DiscoverFragment : Fragment() {
         retry.setOnClickListener {
             vm.retry()
         }
+        save.setOnClickListener {
+            vm.save()
+        }
         thumbnailAdapter.onItemClickListener = {
             findNavController().navigate(DiscoverFragmentDirections.viewDiscoveredPhoto(it))
         }
@@ -100,6 +103,7 @@ class DiscoverFragment : Fragment() {
             else -> View.GONE
         }
     }
+
     private val errorObserver = Observer<CharSequence?> {
         TransitionManager.beginDelayedTransition(appBar)
         if (it != null) {

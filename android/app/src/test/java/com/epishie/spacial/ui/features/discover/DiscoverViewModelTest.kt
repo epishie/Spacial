@@ -10,6 +10,8 @@ import com.epishie.spacial.ui.features.common.TextProvider
 import com.epishie.spacial.ui.features.adapter.Thumbnail
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
+import io.reactivex.Completable
+import io.reactivex.Flowable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -22,6 +24,8 @@ class DiscoverViewModelTest {
     lateinit var vm: DiscoverViewModel
     @MockK
     lateinit var imageRepository: ImageRepository
+    @MockK
+    lateinit var catalogRepository: CatalogRepository
     @MockK
     lateinit var textProvider: TextProvider
     val testImageEntity1 = ImageEntity("1",
@@ -40,13 +44,16 @@ class DiscoverViewModelTest {
     val testThumbnail2 = Thumbnail("2",
             "http://thumbnail.com/2",
             "Image 2")
+    val testCatalogEntity1 = CatalogEntity("sample",
+            "http://thumbnail.com/1")
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        vm = DiscoverViewModel(imageRepository, textProvider)
+        vm = DiscoverViewModel(imageRepository, catalogRepository, textProvider)
 
         every { textProvider.getErrorMessage(ofType(NetworkError::class)) } returns "Network Error"
+        every { catalogRepository.getCatalog("sample") } returns Flowable.empty()
     }
 
     @Test
@@ -138,6 +145,31 @@ class DiscoverViewModelTest {
         vm.retry()
 
         verify { retry() }
+    }
+
+    @Test
+    fun save() {
+        every { catalogRepository.addCatalog(testCatalogEntity1) } returns Completable.complete()
+        val factory = object : DataSource.Factory<String, ImageEntity>() {
+            override fun create(): DataSource<String, ImageEntity> {
+                return MockDataSource(listOf(testImageEntity1, testImageEntity2))
+            }
+        }
+        every { imageRepository.search("sample") } returns SearchResult(factory,
+                MutableLiveData<Status>().apply {
+                    value = Status.Loaded(false)
+                }, {})
+        vm.search("sample")
+        vm.thumbnails.observeForever {  }
+        vm.savable.observeForever {  }
+        //vm.saved.observeForever {  }
+
+        vm.save()
+        /*
+        assertThat(vm.saved.value)
+                .isTrue()
+                */
+        verify { catalogRepository.addCatalog(testCatalogEntity1) }
     }
 
     private class MockDataSource(val value: List<ImageEntity>) : PageKeyedDataSource<String, ImageEntity>() {
