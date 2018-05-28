@@ -1,4 +1,4 @@
-package com.epishie.spacial.ui.features.discover
+package com.epishie.spacial.ui.features.catalog
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.MutableLiveData
@@ -6,22 +6,20 @@ import android.arch.paging.DataSource
 import android.arch.paging.PageKeyedDataSource
 import com.epishie.spacial.model.*
 import com.epishie.spacial.test.waitForValue
-import com.epishie.spacial.ui.features.common.TextProvider
 import com.epishie.spacial.ui.features.adapter.Thumbnail
+import com.epishie.spacial.ui.features.common.TextProvider
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class DiscoverViewModelTest {
+class CatalogViewModelTest {
     @Rule @JvmField
     val taskRule = InstantTaskExecutorRule()
-
-    lateinit var vm: DiscoverViewModel
+    lateinit var vm: CatalogViewModel
     @MockK
     lateinit var imageRepository: ImageRepository
     @MockK
@@ -44,16 +42,14 @@ class DiscoverViewModelTest {
     val testThumbnail2 = Thumbnail("2",
             "http://thumbnail.com/2",
             "Image 2")
-    val testCatalogEntity1 = CatalogEntity("sample",
-            "http://thumbnail.com/1")
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        vm = DiscoverViewModel(imageRepository, catalogRepository, textProvider)
+        vm = CatalogViewModel(imageRepository, catalogRepository, textProvider)
 
+        every { catalogRepository.deleteCatalog(any()) } returns Completable.complete()
         every { textProvider.getErrorMessage(ofType(NetworkError::class)) } returns "Network Error"
-        every { catalogRepository.getCatalog("sample") } returns Flowable.empty()
     }
 
     @Test
@@ -64,18 +60,12 @@ class DiscoverViewModelTest {
                     value = Status.Error(NetworkError())
                 }, {})
         vm.search("sample")
-        vm.loaded.observeForever {  }
         vm.error.observeForever {  }
         vm.empty.observeForever {  }
-        vm.savable.observeForever {  }
 
-        assertThat(vm.loaded.value)
-                .isEqualTo(false)
         assertThat(vm.error.value)
                 .isEqualTo("Network Error")
         assertThat(vm.empty.value)
-                .isEqualTo(false)
-        assertThat(vm.savable.value)
                 .isEqualTo(false)
     }
 
@@ -87,19 +77,13 @@ class DiscoverViewModelTest {
                     value = Status.Loaded(true)
                 }, {})
         vm.search("sample")
-        vm.loaded.observeForever {  }
         vm.empty.observeForever {  }
         vm.error.observeForever {  }
-        vm.savable.observeForever {  }
 
-        assertThat(vm.loaded.value)
-                .isEqualTo(true)
         assertThat(vm.empty.value)
                 .isEqualTo(true)
         assertThat(vm.error.value)
                 .isNull()
-        assertThat(vm.savable.value)
-                .isEqualTo(false)
     }
 
     @Test
@@ -115,21 +99,15 @@ class DiscoverViewModelTest {
                 }, {})
         vm.search("sample")
         vm.thumbnails.observeForever {  }
-        vm.loaded.observeForever {  }
         vm.empty.observeForever {  }
         vm.error.observeForever {  }
-        vm.savable.observeForever {  }
 
         assertThat(vm.thumbnails.value)
                 .containsExactly(testThumbnail1, testThumbnail2)
-        assertThat(vm.loaded.value)
-                .isEqualTo(true)
         assertThat(vm.empty.value)
                 .isEqualTo(false)
         assertThat(vm.error.value)
                 .isNull()
-        assertThat(vm.savable.value)
-                .isEqualTo(true)
     }
 
     @Test
@@ -148,8 +126,7 @@ class DiscoverViewModelTest {
     }
 
     @Test
-    fun save() {
-        every { catalogRepository.addCatalog(testCatalogEntity1) } returns Completable.complete()
+    fun delete() {
         val factory = object : DataSource.Factory<String, ImageEntity>() {
             override fun create(): DataSource<String, ImageEntity> {
                 return MockDataSource(listOf(testImageEntity1, testImageEntity2))
@@ -161,11 +138,12 @@ class DiscoverViewModelTest {
                 }, {})
         vm.search("sample")
         vm.thumbnails.observeForever {  }
-        vm.savable.observeForever {  }
+        vm.empty.observeForever {  }
+        vm.error.observeForever {  }
 
-        vm.save()
+        vm.delete()
 
-        verify { catalogRepository.addCatalog(testCatalogEntity1) }
+        verify { catalogRepository.deleteCatalog("sample") }
     }
 
     private class MockDataSource(val value: List<ImageEntity>) : PageKeyedDataSource<String, ImageEntity>() {

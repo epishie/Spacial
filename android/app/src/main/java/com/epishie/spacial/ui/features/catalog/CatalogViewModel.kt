@@ -46,9 +46,6 @@ class CatalogViewModel @Inject constructor(imageRepository: ImageRepository,
             else -> false
         }
     })
-    val loaded: LiveData<Boolean> = map(searchStatus, { status ->
-        status is Status.Loaded
-    })
     val loading: LiveData<Boolean> = map(searchStatus, { status ->
         status === Status.Loading
     })

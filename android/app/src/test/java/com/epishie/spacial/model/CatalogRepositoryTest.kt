@@ -1,5 +1,9 @@
 package com.epishie.spacial.model
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule
+import android.arch.paging.DataSource
+import android.arch.paging.ItemKeyedDataSource
+import android.arch.paging.LivePagedListBuilder
 import android.database.sqlite.SQLiteException
 import com.epishie.spacial.model.db.CatalogDao
 import com.epishie.spacial.model.db.CatalogData
@@ -10,10 +14,14 @@ import io.reactivex.Flowable
 import io.reactivex.schedulers.TestScheduler
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 class CatalogRepositoryTest {
+    @Rule @JvmField
+    val taskRule = InstantTaskExecutorRule()
+
     lateinit var catalogRepository: CatalogRepository
     @MockK
     lateinit var catalogDao: CatalogDao
@@ -100,5 +108,75 @@ class CatalogRepositoryTest {
                 .isEmpty()
         assertThat(observer.errors().toList())
                 .hasOnlyElementsOfType(DatabaseError::class.java)
+    }
+
+    @Test
+    fun getCatalogsSuccess() {
+        val daoFactory = object : DataSource.Factory<Int, CatalogData>() {
+            override fun create(): DataSource<Int, CatalogData> {
+                return MockDataSource(listOf(testCatalogData1, testCatalogData2))
+            }
+        }
+        every { catalogDao.selectAll() } returns daoFactory
+        val catalogs = LivePagedListBuilder(catalogRepository.getCatalogs(), 10)
+                .build()
+        catalogs.observeForever {  }
+
+        assertThat(catalogs.value)
+                .containsExactly(testCatalogEntity1, testCatalogEntity2)
+    }
+
+    @Test
+    fun deleteCatalogSuccess() {
+        every { catalogDao.deleteCatalog("sample") } returns Unit
+        val observer = catalogRepository.deleteCatalog("sample")
+                .test()
+        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
+
+        assertThat(observer.completions())
+                .isEqualTo(1)
+        assertThat(observer.errors().toList())
+                .isEmpty()
+    }
+
+    @Test
+    fun deleteCatalogDatabaseError() {
+        every { catalogDao.deleteCatalog("sample") } throws SQLiteException()
+        val observer = catalogRepository.deleteCatalog("sample")
+                .test()
+        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
+
+        assertThat(observer.completions())
+                .isEqualTo(0)
+        assertThat(observer.errors().toList())
+                .hasOnlyElementsOfType(DatabaseError::class.java)
+    }
+
+    @Test
+    fun deleteCatalogError() {
+        val error = IllegalStateException()
+        every { catalogDao.deleteCatalog("sample") } throws error
+        val observer = catalogRepository.deleteCatalog("sample")
+                .test()
+        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
+
+        assertThat(observer.completions())
+                .isEqualTo(0)
+        assertThat(observer.errors().toList())
+                .containsExactly(error)
+    }
+
+    private class MockDataSource(val value: List<CatalogData>) : ItemKeyedDataSource<Int, CatalogData>() {
+        override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<CatalogData>) {
+            callback.onResult(value)
+        }
+
+        override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<CatalogData>) { }
+
+        override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<CatalogData>) { }
+
+        override fun getKey(item: CatalogData): Int {
+            return value.indexOf(item)
+        }
     }
 }
